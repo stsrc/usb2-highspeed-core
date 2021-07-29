@@ -1,8 +1,8 @@
 [tool.poetry]
-name = "luna"
+name = "usb2-highspeed-core"
 version = "0.1.0-dev.0"
-description = "nMigen framework for FPGA-based USB solutions"
-authors = ["Katherine Temkin <k@ktemkin.com>"]
+description = "USB2 highspeed core, written in nMigen"
+authors = ["Katherine Temkin <k@ktemkin.com>", "Hans Baier <hansfbaier@gmail.com>"]
 license = "BSD"
 
 [tool.poetry.dependencies]
@@ -20,9 +20,7 @@ usb-protocol = {git = "https://github.com/usb-tools/python-usb-protocol"}
 
 [tool.poetry.dev-dependencies]
 tox = "^3.22.0"
-minerva = {git = "https://github.com/lambdaconcept/minerva.git"}
 nmigen-stdio = {git = "https://github.com/nmigen/nmigen-stdio.git"}
-lambdasoc = {git = "https://github.com/ktemkin/lambdasoc.git"}
 prompt-toolkit = "^3.0.16"
 
 [build-system]
