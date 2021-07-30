@@ -12,7 +12,7 @@ from usb_protocol.types      import USBTransferType
 from usb_protocol.emitters   import DeviceDescriptorCollection
 
 from luna                    import top_level_cli
-from luna.usb2               import USBDevice, USBIsochronousInEndpoint
+from luna.usb2               import USBDevice, USBIsochronousInMemoryEndpoint
 
 
 class USBIsochronousCounterDeviceExample(Elaboratable):
@@ -79,7 +79,7 @@ class USBIsochronousCounterDeviceExample(Elaboratable):
         usb.add_standard_control_endpoint(descriptors)
 
         # Add a stream endpoint to our device.
-        iso_ep = USBIsochronousInEndpoint(
+        iso_ep = USBIsochronousInMemoryEndpoint(
             endpoint_number=self.ISO_ENDPOINT_NUMBER,
             max_packet_size=self.MAX_ISO_PACKET_SIZE
         )
