@@ -319,12 +319,17 @@ class USBIsochronousInStreamEndpoint(Elaboratable):
         ]
 
         with m.FSM(domain="usb") as fsm:
+            m.d.comb += self.stream.ready.eq(fsm.ongoing("SEND_DATA"))
+
             # IDLE -- the host hasn't yet requested data from our endpoint.
             with m.State("IDLE"):
                 m.d.usb  += [
+                    byte_pos.eq(0),
                     # Remain targeting the first byte in our frame.
                     out_stream.first.eq(0)
                 ]
+
+                m.d.comb += next_byte_pos.eq(0)
 
                 # Once the host requests a packet from us...
                 with m.If(data_requested):
@@ -346,7 +351,6 @@ class USBIsochronousInStreamEndpoint(Elaboratable):
                 m.d.comb += [
                     # Our data is always valid in this state...
                     out_stream.valid .eq(1),
-                    self.stream.ready.eq(fsm.ongoing("SEND_DATA")),
 
                     # ... and we're terminating our packet if we're on the last byte of it.
                     out_stream.last  .eq(byte_terminates_send),
