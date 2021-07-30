@@ -311,9 +311,6 @@ class USBIsochronousInStreamEndpoint(Elaboratable):
         m.d.comb += [
             out_stream.payload       .eq(self.stream.payload),
 
-            # do not accept data from the input stream by default
-            self.stream.ready        .eq(0),
-
             # Provide our data pid through to to the transmitter.
             interface.tx_pid_toggle  .eq(next_data_pid)
         ]
