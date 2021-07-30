@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "usb2-highspeed-core"
+name = "luna"
 version = "0.1.0-dev.0"
 description = "USB2 highspeed core, written in nMigen"
 authors = ["Katherine Temkin <k@ktemkin.com>", "Hans Baier <hansfbaier@gmail.com>"]
