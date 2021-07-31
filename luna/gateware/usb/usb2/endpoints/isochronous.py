@@ -309,7 +309,8 @@ class USBIsochronousInStreamEndpoint(Elaboratable):
                 m.d.usb += next_data_pid.eq(0)
 
         m.d.comb += [
-            out_stream.payload       .eq(self.stream.payload),
+            # transmit zeros by default
+            out_stream.payload.eq(0),
 
             # Provide our data pid through to to the transmitter.
             interface.tx_pid_toggle  .eq(next_data_pid)
@@ -331,10 +332,9 @@ class USBIsochronousInStreamEndpoint(Elaboratable):
                 # Once the host requests a packet from us...
                 with m.If(data_requested):
                     # If we have data to send, send it.
-                    with m.If(self.stream.valid):
-                        with m.If(bytes_left_in_frame):
-                            m.d.usb += out_stream.first.eq(1)
-                            m.next = "SEND_DATA"
+                    with m.If(bytes_left_in_frame):
+                        m.d.usb += out_stream.first.eq(1)
+                        m.next = "SEND_DATA"
 
                     # Otherwise, we'll send a ZLP.
                     with m.Else():
@@ -353,6 +353,9 @@ class USBIsochronousInStreamEndpoint(Elaboratable):
                     # ... and we're terminating our packet if we're on the last byte of it.
                     out_stream.last  .eq(byte_terminates_send),
                 ]
+
+                with m.If(self.stream.valid):
+                    m.d.comb += out_stream.payload.eq(self.stream.payload)
 
                 m.d.usb += byte_pos.eq(next_byte_pos)
 
