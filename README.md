@@ -10,11 +10,12 @@ FPGA project.
 ## Notable differences to the LUNA project
 
 This project implements stream based isochronous
-in and out endpoints, with a FIFO-like interface,
-which the LUNA project does not.
+in and out endpoints:
+* [USBIsochronousInStreamEndpoint](https://github.com/hansfbaier/usb2-highspeed-core/blob/main/luna/gateware/usb/usb2/endpoints/isochronous.py#L219)
+* [USBIsochronousOutStreamEndpoint](https://github.com/hansfbaier/usb2-highspeed-core/blob/main/luna/gateware/usb/usb2/endpoints/isochronous.py#L401)
 
-The original motivation for this project was to provide everything
-needed to get a working USB2 audio class compliant example, supporting audio and MIDI.
+This project includes the following examples:
+* [USB2 class compliant high speed audio interface](https://github.com/hansfbaier/usb2-highspeed-core/blob/main/examples/usb2_audio.py)
 
 ## Project Structure
 
