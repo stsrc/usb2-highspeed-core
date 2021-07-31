@@ -321,8 +321,8 @@ class USBIsochronousInStreamEndpoint(Elaboratable):
             # IDLE -- the host hasn't yet requested data from our endpoint.
             with m.State("IDLE"):
                 m.d.usb  += [
-                    byte_pos.eq(0),
                     # Remain targeting the first byte in our frame.
+                    byte_pos.eq(0),
                     out_stream.first.eq(0)
                 ]
 
@@ -331,9 +331,10 @@ class USBIsochronousInStreamEndpoint(Elaboratable):
                 # Once the host requests a packet from us...
                 with m.If(data_requested):
                     # If we have data to send, send it.
-                    with m.If(bytes_left_in_frame & self.stream.valid):
-                        m.d.usb += out_stream.first.eq(1)
-                        m.next = "SEND_DATA"
+                    with m.If(self.stream.valid):
+                        with m.If(bytes_left_in_frame):
+                            m.d.usb += out_stream.first.eq(1)
+                            m.next = "SEND_DATA"
 
                     # Otherwise, we'll send a ZLP.
                     with m.Else():
