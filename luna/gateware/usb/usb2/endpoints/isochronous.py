@@ -317,8 +317,6 @@ class USBIsochronousInStreamEndpoint(Elaboratable):
         ]
 
         with m.FSM(domain="usb") as fsm:
-            m.d.comb += self.stream.ready.eq(fsm.ongoing("SEND_DATA"))
-
             # IDLE -- the host hasn't yet requested data from our endpoint.
             with m.State("IDLE"):
                 m.d.usb  += [
@@ -360,7 +358,10 @@ class USBIsochronousInStreamEndpoint(Elaboratable):
                 m.d.usb += byte_pos.eq(next_byte_pos)
 
                 # By default, don't advance.
-                m.d.comb += next_byte_pos.eq(byte_pos)
+                m.d.comb += [
+                    next_byte_pos.eq(byte_pos),
+                    self.stream.ready.eq(0)
+                ]
 
                 # We'll advance each time our data is accepted.
                 with m.If(out_stream.ready):
@@ -373,7 +374,10 @@ class USBIsochronousInStreamEndpoint(Elaboratable):
                     ]
 
                     # ... and advance to the next address.
-                    m.d.comb += next_byte_pos.eq(byte_pos + 1)
+                    m.d.comb += [
+                        self.stream.ready.eq(1),
+                        next_byte_pos.eq(byte_pos + 1)
+                    ]
 
                     # If we've just completed transmitting a packet, or we've
                     # just transmitted a full frame, end our transmission.
