@@ -22,7 +22,7 @@ from luna.gateware.stream.generator           import StreamSerializer
 
 class USB2AudioInterface(Elaboratable):
     """ USB Audio Class v2 interface """
-    MAX_PACKET_SIZE = 256 * 3 # 256 samples of 24 bit each
+    MAX_PACKET_SIZE = 104
 
     def create_descriptors(self):
         """ Creates the descriptors that describe our audio topology. """
