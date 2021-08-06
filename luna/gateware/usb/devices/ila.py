@@ -153,7 +153,7 @@ class USBIntegratedLogicAnalyzerFrontend(ILAFrontend):
         The ILA object to work with.
     """
 
-    def __init__(self, *args, ila, delay=3, **kwargs):
+    def __init__(self, *args, ila, delay=3, idVendor=0x16d0, idProduct=0x5a5, endpoint_no=1, **kwargs):
         import usb
         import time
 
@@ -162,8 +162,8 @@ class USBIntegratedLogicAnalyzerFrontend(ILAFrontend):
             time.sleep(delay)
 
         # Create our USB connection the device
-        self._device = usb.core.find(idVendor=0x16d0, idProduct=0x5a5)
-
+        self._device = usb.core.find(idVendor=idVendor, idProduct=idProduct)
+        self._endpoint_no = endpoint_no
 
         super().__init__(ila)
 
@@ -189,5 +189,5 @@ class USBIntegratedLogicAnalyzerFrontend(ILAFrontend):
         total_to_read      = self.ila.sample_depth * sample_width_bytes
 
         # Fetch all of our samples from the given device.
-        all_samples = self._device.read(0x81, total_to_read, timeout=0)
+        all_samples = self._device.read(0x80 + self._endpoint_no, total_to_read, timeout=0)
         return list(self._split_samples(all_samples))
