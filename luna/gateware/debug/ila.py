@@ -12,6 +12,7 @@ import sys
 import math
 import unittest
 import tempfile
+import pickle
 import subprocess
 
 from abc             import ABCMeta, abstractmethod
@@ -762,7 +763,26 @@ class AsyncSerialILA(Elaboratable):
 
         return m
 
+class ILACoreParameters:
+    """ This Class is needed to pickle the core parameters of an ILA.
+        This makes it possible to run the frontend in a different python script
+    """
+    def __init__(self, ila) -> None:
+        self.signals          = ila.signals
+        self.sample_width     = ila.sample_width
+        self.sample_depth     = ila.sample_depth
+        self.sample_rate      = ila.sample_rate
+        self.sample_period    = ila.sample_period
+        self.bits_per_sample  = ila.bits_per_sample
+        self.bytes_per_sample = ila.bytes_per_sample
 
+    def pickle(self, filename="ila.P"):
+        pickle.dump(self, open(filename, "wb"))
+
+    @staticmethod
+    def unpickle(filename="ila.P"):
+        ila_core_parameters = pickle.load(open(filename, "rb"))
+        return ILACoreParameters(ila_core_parameters)
 
 class ILAFrontend(metaclass=ABCMeta):
     """ Class that communicates with an ILA module and emits useful output. """
