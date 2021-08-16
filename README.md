@@ -17,6 +17,9 @@ in and out endpoints:
 This project includes the following examples:
 * [USB2 class compliant high speed audio interface](https://github.com/hansfbaier/usb2-highspeed-core/blob/main/examples/usb2_audio.py)
 
+This project includes the following additional platform files:
+* [Terasic/Arrow DECA](https://github.com/hansfbaier/usb2-highspeed-core/blob/main/luna/gateware/platform/arrow_deca.py) configuration tested working on the FPGA
+
 ## Project Structure
 
 This project is broken down into several directories:
