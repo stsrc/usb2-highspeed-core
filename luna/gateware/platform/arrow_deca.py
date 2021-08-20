@@ -113,8 +113,8 @@ class ArrowDECAPlatform(IntelPlatform, LUNAPlatform):
             Subsignal("data",    Pins("E12 E13 H13 E14 H14 D15 E15 F15", dir="io"), Attrs(io_standard="1.8 V")),
         ),
 
-        I2CResource("i2c_audio", 0, sda="P21", scl="P20"),
-        SPIResource("spi_audio", 0, cs_n="P20", clk="P19", copi="P21", cipo="N21"),
+        I2CResource("i2c_audio", 0, sda="P21", scl="P20", attrs=Attrs(io_standard="1.5 V")),
+        SPIResource("spi_audio", 0, cs_n="P20", clk="P19", copi="P21", cipo="N21", attrs=Attrs(io_standard="1.5 V")),
 
         Resource("audio", 0,
             Subsignal("reset",      PinsN("M21", dir="o")),
