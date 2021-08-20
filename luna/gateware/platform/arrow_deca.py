@@ -58,11 +58,9 @@ class ArrowDECAClockAndResetController(Elaboratable):
         # from nmigen_boards.test.blinky import Blinky
         # m.submodules += Blinky()
 
-        leds = platform.request("led")
         usb = platform.request("usb")
         m.d.comb += [
             usb.cs.eq(1),
-            leds[0].eq(usb.fault),
         ]
 
         return m
