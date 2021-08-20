@@ -76,7 +76,7 @@ class ArrowDECAPlatform(IntelPlatform, LUNAPlatform):
 
     clock_domain_generator = ArrowDECAClockAndResetController
     default_usb_connection = "ulpi"
-    ignore_phy_vbus = False
+    ignore_phy_vbus = True
 
     resources   = [
         Resource("clk50", 0, Pins("M8", dir="i"),
@@ -113,19 +113,20 @@ class ArrowDECAPlatform(IntelPlatform, LUNAPlatform):
             Subsignal("data",    Pins("E12 E13 H13 E14 H14 D15 E15 F15", dir="io"), Attrs(io_standard="1.8 V")),
         ),
 
+        I2CResource("i2c_audio", 0, sda="P21", scl="P20"),
+        SPIResource("spi_audio", 0, cs_n="P20", clk="P19", copi="P21", cipo="N21"),
+
         Resource("audio", 0,
-            Subsignal("bclk",       Pins("R14", dir="io")),
-            Subsignal("reset",      Pins("M21", dir="o", invert=True)),
-            Subsignal("din_mfp1",   Pins("P15", dir="o")),
-            Subsignal("dout_mfp2",  Pins("P18", dir="i")),
-            Subsignal("gpio_mfp5",  Pins("M22", dir="o")),
-            Subsignal("mclk",       Pins("P14", dir="o")),
-            Subsignal("miso_mfp4",  Pins("N21", dir="i")),
-            Subsignal("sclk_mfp3",  Pins("P19", dir="o")),
-            Subsignal("scl_ss_n",   Pins("P20", dir="o")),
-            Subsignal("sda_mosi",   Pins("P21", dir="io")),
-            Subsignal("spi_select", Pins("N22", dir="o")),
-            Subsignal("wclk",       Pins("R15", dir="o")),
+            Subsignal("reset",      PinsN("M21", dir="o")),
+            Subsignal("mclk",       Pins ("P14", dir="o")),
+            Subsignal("wclk",       Pins ("R15", dir="o")),
+            Subsignal("bclk",       Pins ("R14", dir="io")),
+            Subsignal("spi_select", Pins ("N22", dir="o")),
+            Subsignal("din_mfp1",   Pins ("P15", dir="o")),
+            Subsignal("dout_mfp2",  Pins ("P18", dir="i")),
+            Subsignal("sclk_mfp3",  Pins ("P19", dir="o")),
+            Subsignal("miso_mfp4",  Pins ("N21", dir="i")),
+            Subsignal("gpio_mfp5",  Pins ("M22", dir="o")),
             Attrs(io_standard="1.5 V")
         ),
     ]
