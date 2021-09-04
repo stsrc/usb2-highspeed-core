@@ -230,6 +230,12 @@ class USBIsochronousInStreamEndpoint(Elaboratable):
     interface: EndpointInterface
         Communications link to our USB core.
 
+    data_requested: Signal(), output
+        Strobes, when a new packet starts
+
+    frame_finished: Signal(), output
+        Strobes immediately after the last byte in a frame has been transmitted
+
     bytes_in_frame: Signal(range(0, 3073)), input
         Specifies how many bytes will be transferred during this frame. If this is 0,
         a single ZLP will be emitted; for any other value one, two, or three packets
@@ -263,6 +269,8 @@ class USBIsochronousInStreamEndpoint(Elaboratable):
         #
         self.interface      = EndpointInterface()
         self.stream         = StreamInterface()
+        self.data_requested = Signal()
+        self.frame_finished = Signal()
 
         self.bytes_in_frame = Signal(range(0, self._MAX_FRAME_DATA + 1))
 
@@ -316,7 +324,9 @@ class USBIsochronousInStreamEndpoint(Elaboratable):
             interface.tx_pid_toggle  .eq(next_data_pid)
         ]
 
-        with m.FSM(domain="usb") as fsm:
+        with m.FSM(domain="usb", name="iso_stream_ep_in_fsm"):
+            m.d.usb += self.frame_finished.eq(0)
+
             # IDLE -- the host hasn't yet requested data from our endpoint.
             with m.State("IDLE"):
                 m.d.usb  += [
@@ -329,6 +339,8 @@ class USBIsochronousInStreamEndpoint(Elaboratable):
 
                 # Once the host requests a packet from us...
                 with m.If(data_requested):
+                    m.d.comb += self.data_requested.eq(1)
+
                     # If we have data to send, send it.
                     with m.If(bytes_left_in_frame):
                         m.d.usb += out_stream.first.eq(1)
@@ -345,13 +357,19 @@ class USBIsochronousInStreamEndpoint(Elaboratable):
                 byte_terminates_send   = last_byte_in_packet | last_byte_in_frame
 
                 m.d.comb += [
-                    # Our data is always valid in this state...
+                    # we need to deliver continuously from now on
+                    # if the supplier stream does not deliver
+                    # we send zeros
                     out_stream.valid .eq(1),
 
                     # ... and we're terminating our packet if we're on the last byte of it.
                     out_stream.last  .eq(byte_terminates_send),
                 ]
 
+                # frame_finished strobes one cycle after out_stream.last
+                m.d.usb += self.frame_finished.eq(byte_terminates_send)
+
+                # if supplier stream stuck: send zeros
                 with m.If(self.stream.valid):
                     m.d.comb += out_stream.payload.eq(self.stream.payload)
 
