@@ -613,7 +613,7 @@ class LongDescriptorTest(USBDeviceTest):
 #
 try:
 
-    from ...soc.peripheral import Peripheral
+    from nmigen_library.soc.peripheral import Peripheral
 
     class USBDeviceController(Peripheral, Elaboratable):
         """ SoC controller for a USBDevice.

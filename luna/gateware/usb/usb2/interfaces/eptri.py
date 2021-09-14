@@ -16,9 +16,8 @@ from nmigen.lib.fifo    import SyncFIFOBuffered
 from nmigen.hdl.xfrm    import ResetInserter, DomainRenamer
 
 
-from ..endpoint         import EndpointInterface
-from ....soc.peripheral import Peripheral
-from luna.gateware.usb.usb2 import endpoint
+from ..endpoint                    import EndpointInterface
+from nmigen_library.soc.peripheral import Peripheral
 
 
 class SetupFIFOInterface(Peripheral, Elaboratable):
