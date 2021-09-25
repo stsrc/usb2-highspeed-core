@@ -12,6 +12,7 @@
 
 
 #include <stdbool.h>
+#include <stdint.h>
 #include "resources.h"
 
 #define ARRAY_SIZE(array) (sizeof(array) / sizeof(*array))

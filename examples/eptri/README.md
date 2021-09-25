@@ -6,10 +6,7 @@ The easiest way to do both at once is to
 
 ```sh
 
-# Build and program:
-$ make program
-
-# Or just build:
+# To build:
 $ make soc.bit
 ```
 

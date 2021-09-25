@@ -50,7 +50,7 @@ $(TARGET).bin: $(TARGET).elf
 # Virtual/command targets.
 #
 
-.PHONY: clean program
+.PHONY: clean
 
 clean:
 	rm -f $(TARGET).elf $(TARGET).bin soc.ld resources.h soc.bit
@@ -58,7 +58,3 @@ clean:
 
 soc.bit: $(SOC) $(TARGET).bin
 	./$(SOC) -o soc.bit
-
-# Load our SoC onto the FPGA...
-program: soc.bit
-	apollo configure soc.bit
