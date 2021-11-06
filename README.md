@@ -9,6 +9,9 @@ FPGA project.
 
 ## Notable differences to the LUNA project
 
+* USB MIDI is broken upstream, and is working here
+* USB Audio is impossible upstream, because the isochronous endpoints are missing (see below)
+
 This project implements stream based isochronous
 in and out endpoints:
 * [USBIsochronousInStreamEndpoint](https://github.com/hansfbaier/usb2-highspeed-core/blob/main/luna/gateware/usb/usb2/endpoints/isochronous.py#L219)
