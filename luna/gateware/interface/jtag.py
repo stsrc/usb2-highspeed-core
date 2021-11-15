@@ -11,7 +11,7 @@ from nmigen.lib.cdc import FFSynchronizer, PulseSynchronizer
 from nmigen.hdl.ast import ValueCastable
 from nmigen.hdl.rec import DIR_FANIN, DIR_FANOUT
 
-from ..utils        import falling_edge_detected
+from ..utils        import falling_edge_detected, rising_edge_detected
 from .spi           import SPIRegisterInterface
 
 class ECP5DebugSPIBridge(Elaboratable, ValueCastable):
@@ -196,8 +196,10 @@ class JTAGCommandInterface(Elaboratable):
         #
         # Instruction and data registers.
         #
-        instruction_register         = Signal(self.command_size + 1, reset=(2 ** self.command_size) - 1)
-        data_register                = Signal(self.word_size + 1, reset=(2 ** self.word_size) - 1)
+        ir_size              = self.command_size + 1
+        dr_size              = self.word_size + 1
+        instruction_register = Signal(ir_size, reset=(2 ** ir_size - 1))
+        data_register        = Signal(dr_size, reset=(2 ** dr_size - 1))
 
         #
         # JTAG interface.
@@ -233,21 +235,13 @@ class JTAGCommandInterface(Elaboratable):
         )
         m.d.comb += jtag_in_reset.eq(~jtag_not_in_reset)
 
-        # Create a clock domain clocked from our JTAG clock, for most of our internals.
-        m.domains.jtag = ClockDomain(local=True)
-        m.d.comb += ClockSignal("jtag").eq(jtag_clk)
+        # Edges on the JTAGG signals line up directly with the JTCK rising edge,
+        # so create a delayed version of the clock to sample them reliably.
+        jtag_clk_delayed = Signal()
+        m.d.sync += jtag_clk_delayed.eq(jtag_clk)
 
-
-        # Synchronize our data to be transmitted into the JTAG domain.
-        synchronized_word_to_send = Signal.like(self.word_to_send)
-        m.submodules += [
-            FFSynchronizer(self.word_to_send, synchronized_word_to_send, o_domain="jtag")
-        ]
-
-
-        #
-        # Instruction / data register handling.
-        #
+        # Detect a rising edge in jtag_clk.
+        jtag_strobe = rising_edge_detected(m, jtag_clk_delayed)
 
         # Always output the end of our scan chains.
         m.d.comb += [
@@ -255,56 +249,42 @@ class JTAGCommandInterface(Elaboratable):
             jtag_tdo_data         .eq(data_register[0]),
         ]
 
-        # Once we're actively shifting an instruction over JTAG, capture it.
-        shifting_instruction = jtag_ce_instruction & jtag_in_shift_dr
-        with m.If(jtag_in_reset):
-            m.d.jtag += instruction_register.eq(instruction_register.reset)
-        with m.Elif(shifting_instruction):
-            m.d.jtag += instruction_register.eq(Cat(instruction_register[1:], jtag_tdi))
+        with m.If(jtag_strobe):
+            # Once we're actively shifting an instruction over JTAG, capture it.
+            shifting_instruction = Signal()
+            m.d.sync += shifting_instruction.eq(jtag_ce_instruction & jtag_in_shift_dr)
+            with m.If(jtag_in_reset):
+                m.d.sync += instruction_register.eq(instruction_register.reset)
+            with m.Elif(shifting_instruction):
+                m.d.sync += instruction_register.eq(Cat(instruction_register[1:], jtag_tdi))
 
 
-        # Once we're actively shifting an instruction over JTAG, capture it.
-        shifting_data = jtag_ce_data & jtag_in_shift_dr
-        with m.If(jtag_in_reset):
-            m.d.jtag += data_register.eq(data_register.reset)
-        with m.Elif(shifting_data):
-            m.d.jtag += data_register.eq(Cat(data_register[1:], jtag_tdi))
-        with m.Elif(jtag_rti_instruction):
-            m.d.jtag += data_register.eq(synchronized_word_to_send)
+            # Once we're actively shifting data over JTAG, capture it.
+            shifting_data = Signal()
+            m.d.sync += shifting_data.eq(jtag_ce_data & jtag_in_shift_dr)
+            with m.If(jtag_in_reset):
+                m.d.sync += data_register.eq(data_register.reset)
+            with m.Elif(shifting_data):
+                m.d.sync += data_register.eq(Cat(data_register[1:], jtag_tdi))
+            with m.Elif(jtag_rti_instruction):
+                m.d.sync += data_register.eq(self.word_to_send)
 
-
-        #
-        # Output domain handling.
-        #
-        synchronized_command               = Signal.like(instruction_register)
-        synchronized_data                  = Signal.like(data_register)
-        synchronized_shifting_instruction  = Signal()
-        synchronized_shifting_data         = Signal()
-
-        # Capture synchronized versions of our instruction and data, and associated signals.
-        m.submodules += [
-            FFSynchronizer(instruction_register, synchronized_command),
-            FFSynchronizer(data_register,        synchronized_data),
-
-            FFSynchronizer(shifting_instruction, synchronized_shifting_instruction),
-            FFSynchronizer(shifting_data, synchronized_shifting_data),
-        ]
 
         # Create our event strobes.
         command_ready = Signal()
         data_ready    = Signal()
 
-        # Create our internal "data/command ready" signals.
-        m.d.sync += [
-           command_ready  .eq(falling_edge_detected(m, synchronized_shifting_instruction)),
-           data_ready     .eq(falling_edge_detected(m, synchronized_shifting_data)),
+        # Connect up our "data/command ready" signals.
+        m.d.comb += [
+           command_ready  .eq(falling_edge_detected(m, shifting_instruction)),
+           data_ready     .eq(falling_edge_detected(m, shifting_data)),
         ]
 
         # Latch our output data when new data is ready.
         with m.If(command_ready):
-            m.d.sync += self.command.eq(synchronized_command[1:])
+            m.d.sync += self.command.eq(instruction_register[1:])
         with m.If(data_ready):
-            m.d.sync += self.word_received.eq(synchronized_data[1:])
+            m.d.sync += self.word_received.eq(data_register[1:])
 
         # Create sync-domain versions of our data/command ready signals, which are delayed
         # one cycle from our internal ones, to coincide with the point at which our data is latched.
