@@ -15,10 +15,10 @@ from nmigen import Signal, Elaboratable, Module, Cat, ClockDomain, ClockSignal, 
 from nmigen.lib.cdc import FFSynchronizer
 
 from luna                          import top_level_cli
-from apollo_fpga                        import ApolloDebugger, ApolloILAFrontend
+from apollo_fpga                   import ApolloDebugger, ApolloILAFrontend
 from luna.gateware.utils.cdc       import synchronize
 from luna.gateware.interface.spi   import SPIRegisterInterface, SPIMultiplexer, SPIBus
-from luna.gateware.debug.ila       import SyncSerialILA
+from nmigen_library.debug.ila      import SyncSerialILA
 
 REGISTER_ID  = 1
 REGISTER_ILA = 2

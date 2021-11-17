@@ -17,6 +17,7 @@ nmigen = {git = "https://github.com/nmigen/nmigen.git"}
 nmigen-soc = {git = "https://github.com/nmigen/nmigen-soc.git"}
 nmigen-boards = {git = "https://github.com/nmigen/nmigen-boards.git"}
 usb-protocol = {git = "https://github.com/usb-tools/python-usb-protocol"}
+nmigen-library = {git = "https://github.com/hansfbaier/nmigen-library", branch="main"}
 
 [tool.poetry.dev-dependencies]
 tox = "^3.22.0"

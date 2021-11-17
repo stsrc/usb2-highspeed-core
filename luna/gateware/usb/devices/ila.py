@@ -8,15 +8,11 @@
 
 from nmigen                            import Elaboratable, Module, Signal, Cat
 
-from ...debug.ila                      import StreamILA, ILAFrontend
-from ...stream                         import StreamInterface
+from nmigen_library.debug.ila          import StreamILA, ILAFrontend
 from ..usb2.device                     import USBDevice
-from ..usb2.request                    import USBRequestHandler, StallOnlyRequestHandler
 from ..usb2.endpoints.stream           import USBMultibyteStreamInEndpoint
 
-from usb_protocol.types                import USBRequestType
 from usb_protocol.emitters             import DeviceDescriptorCollection
-from usb_protocol.emitters.descriptors import cdc
 
 
 class USBIntegratedLogicAnalyzer(Elaboratable):
