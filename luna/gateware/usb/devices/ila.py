@@ -166,7 +166,7 @@ class USBIntegratedLogicAnalyzerFrontend(ILAFrontend):
 
     def _split_samples(self, all_samples):
         """ Returns an iterator that iterates over each sample in the raw binary of samples. """
-        from apollo_fpga.support.bits import bits
+        from nmigen_library.utils.bits import bits
 
         sample_width_bytes = self.ila.bytes_per_sample
 
