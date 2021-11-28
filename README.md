@@ -44,3 +44,7 @@ based on jotego's open source implementation of the Yamaha YM2151.
 The project uses this core as USB MIDI interface.
 * [adat-usb2-audio-interface](https://github.com/hansfbaier/adat-usb2-audio-interface),
 an USB2 high speed audio interface with ADAT inputs and outputs
+* [deca-usb2-audio-interface](https://github.com/hansfbaier/deca-usb2-audio-interface),
+an USB2 high speed audio interface with analog inputs and outputs
+* [deca-mandelbrot](https://github.com/hansfbaier/deca-mandelbrot),
+  a mandelbrot accelerator connected with a USB2 high speed interface
