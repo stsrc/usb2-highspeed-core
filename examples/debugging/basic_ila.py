@@ -5,13 +5,13 @@
 # Copyright (c) 2020 Great Scott Gadgets <info@greatscottgadgets.com>
 # SPDX-License-Identifier: BSD-3-Clause
 
-from nmigen                   import *
-from apollo_fpga              import create_ila_frontend
+from amaranth                import *
+from apollo_fpga             import create_ila_frontend
 
-from luna                     import top_level_cli
-from luna.gateware.platform   import NullPin
-from luna.gateware.utils.cdc  import synchronize
-from nmigen_library.debug.ila import SyncSerialILA
+from luna                    import top_level_cli
+from luna.gateware.platform  import NullPin
+from luna.gateware.utils.cdc import synchronize
+from luna.gateware.debug.ila import SyncSerialILA
 
 
 class ILAExample(Elaboratable):

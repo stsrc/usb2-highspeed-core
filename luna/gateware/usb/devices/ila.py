@@ -6,7 +6,7 @@
 
 """ Pre-made gateware that implements an ILA connection serial. """
 
-from nmigen                            import Elaboratable, Module, Signal, Cat
+from amaranth                          import Elaboratable, Module, Signal, Cat
 
 from nmigen_library.debug.ila          import StreamILA, ILAFrontend
 from ..usb2.device                     import USBDevice
