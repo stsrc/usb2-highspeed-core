@@ -16,8 +16,8 @@ ziglang = "^0.8.0"
 amaranth = {git = "https://github.com/amaranth-lang/amaranth.git", branch="main"}
 amaranth-soc = {git = "https://github.com/amaranth-lang/amaranth-soc.git", branch="main"}
 amaranth-boards = {git = "https://github.com/amaranth-lang/amaranth-boards.git", branch="main"}
-usb-protocol = {git = "https://github.com/usb-tools/python-usb-protocol"}
-nmigen-library = {git = "https://github.com/hansfbaier/nmigen-library", branch="main"}
+usb-descriptors = {git = "git://github.com/hansfbaier/python-usb-descriptors.git"}
+amaranth-library = {git = "https://github.com/hansfbaier/amaranth-library", branch="main"}
 
 [tool.poetry.dev-dependencies]
 tox = "^3.22.0"
