@@ -259,15 +259,16 @@ class USBIsochronousInStreamEndpoint(Elaboratable):
 
     _MAX_FRAME_DATA = 1024 * 3
 
-    def __init__(self, *, endpoint_number, max_packet_size):
+    def __init__(self, *, endpoint_number, max_packet_size, name=None):
         self._endpoint_number = endpoint_number
         self._max_packet_size = max_packet_size
+        name = f"isochronous_endpoint{endpoint_number}" if name is None else name
 
         #
         # I/O Port
         #
         self.interface      = EndpointInterface()
-        self.stream         = StreamInterface()
+        self.stream         = StreamInterface(name=name)
         self.data_requested = Signal()
         self.frame_finished = Signal()
 
@@ -452,15 +453,16 @@ class USBIsochronousOutStreamEndpoint(Elaboratable):
         Defaults to twice the maximum packet size.
     """
 
-    def __init__(self, *, endpoint_number, max_packet_size, buffer_size=None):
+    def __init__(self, *, endpoint_number, max_packet_size, buffer_size=None, name=None):
         self._endpoint_number = endpoint_number
         self._max_packet_size = max_packet_size
         self._buffer_size = buffer_size if (buffer_size is not None) else (self._max_packet_size * 2)
+        name = f"isochronous_endpoint{endpoint_number}" if name is None else name
 
         #
         # I/O port
         #
-        self.stream    = StreamInterface()
+        self.stream    = StreamInterface(name=name)
         self.interface = EndpointInterface()
 
 
