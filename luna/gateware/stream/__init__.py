@@ -41,7 +41,7 @@ class StreamInterface(Record):
         Similar to a record's layout field; but cannot be nested.
     """
 
-    def __init__(self, payload_width=8, valid_width=1, extra_fields=None):
+    def __init__(self, *, name=None, payload_width=8, valid_width=1, extra_fields=None):
         """
         Parameter:
             payload_width -- The width of the payload packets.
@@ -64,8 +64,7 @@ class StreamInterface(Record):
 
             ('payload',  payload_width),
             *extra_fields
-        ])
-
+        ], name=name)
 
     def attach(self, interface, omit=None):
         # Create lists of fields to be copied -to- the interface (RHS fields),
