@@ -16,8 +16,9 @@ from amaranth.lib.fifo  import SyncFIFOBuffered
 from amaranth.hdl.xfrm  import ResetInserter, DomainRenamer
 
 
-from ..endpoint                    import EndpointInterface
-from nmigen_library.soc.peripheral import Peripheral
+from ..endpoint            import EndpointInterface
+
+from amlib.soc.peripheral  import Peripheral
 
 
 class SetupFIFOInterface(Peripheral, Elaboratable):

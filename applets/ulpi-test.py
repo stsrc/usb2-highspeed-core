@@ -18,7 +18,7 @@ from amaranth.lib.cdc import FFSynchronizer
 from luna                             import top_level_cli
 
 from apollo_fpga                      import ApolloDebugger, ApolloILAFrontend
-from nmigen_library.debug.ila         import SyncSerialILA
+from amlib.debug.ila                  import SyncSerialILA
 
 
 from luna.gateware.utils.cdc          import synchronize

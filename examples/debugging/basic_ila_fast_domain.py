@@ -10,7 +10,7 @@ from amaranth import Signal, Module, Elaboratable, ClockDomain, ClockSignal, Cat
 
 from luna                             import top_level_cli
 from luna.gateware.utils.cdc          import synchronize
-from nmigen_library.debug.ila         import SyncSerialILA
+from amlib.debug.ila                  import SyncSerialILA
 from luna.gateware.architecture.car   import LunaECP5DomainGenerator
 
 from apollo_fpga                           import create_ila_frontend

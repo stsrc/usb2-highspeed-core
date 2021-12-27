@@ -18,7 +18,7 @@ from luna                          import top_level_cli
 from apollo_fpga                   import ApolloDebugger, ApolloILAFrontend
 from luna.gateware.utils.cdc       import synchronize
 from luna.gateware.interface.spi   import SPIRegisterInterface, SPIMultiplexer, SPIBus
-from nmigen_library.debug.ila      import SyncSerialILA
+from amlib.debug.ila               import SyncSerialILA
 
 REGISTER_ID  = 1
 REGISTER_ILA = 2

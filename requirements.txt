@@ -3,7 +3,7 @@ pyusb
 -e git://github.com/amaranth-lang/amaranth.git#egg=amaranth
 -e git://github.com/amaranth-lang/amaranth-soc.git#egg=amaranth-soc
 -e git://github.com/hansfbaier/amaranth-boards.git#egg=amaranth_boards
--e git://github.com/hansfbaier/amaranth-library.git#egg=amaranth_library
+-e git://github.com/amaranth-community-unofficial/amlib.git#egg=amlib
 -e git://github.com/lambdaconcept/minerva.git#egg=minerva
 -e git://github.com/lambdaconcept/lambdasoc.git#egg=lambdasoc
 -e git://github.com/hansfbaier/python-usb-descriptors.git#egg=usb_descriptors

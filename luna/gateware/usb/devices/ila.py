@@ -8,7 +8,7 @@
 
 from amaranth                          import Elaboratable, Module, Signal, Cat
 
-from nmigen_library.debug.ila          import StreamILA, ILAFrontend
+from amlib.debug.ila                   import StreamILA, ILAFrontend
 from ..usb2.device                     import USBDevice
 from ..usb2.endpoints.stream           import USBMultibyteStreamInEndpoint
 
@@ -166,7 +166,7 @@ class USBIntegratedLogicAnalyzerFrontend(ILAFrontend):
 
     def _split_samples(self, all_samples):
         """ Returns an iterator that iterates over each sample in the raw binary of samples. """
-        from nmigen_library.utils.bits import bits
+        from amlib.utils.bits import bits
 
         sample_width_bytes = self.ila.bytes_per_sample
 

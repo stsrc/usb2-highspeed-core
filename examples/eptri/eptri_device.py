@@ -16,7 +16,7 @@ from lambdasoc.periph.serial                 import AsyncSerialPeripheral
 from lambdasoc.periph.timer                  import TimerPeripheral
 
 from luna                                    import top_level_cli
-from nmigen_library.soc                      import SimpleSoC
+from amlib.soc                               import SimpleSoC
 
 from luna.gateware.usb.usb2.device           import USBDevice, USBDeviceController
 from luna.gateware.usb.usb2.interfaces.eptri import SetupFIFOInterface, InFIFOInterface, OutFIFOInterface

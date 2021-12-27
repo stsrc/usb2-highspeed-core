@@ -17,7 +17,7 @@ amaranth = {git = "https://github.com/amaranth-lang/amaranth.git", branch="main"
 amaranth-soc = {git = "https://github.com/amaranth-lang/amaranth-soc.git", branch="main"}
 amaranth-boards = {git = "https://github.com/amaranth-lang/amaranth-boards.git", branch="main"}
 usb-descriptors = {git = "git://github.com/hansfbaier/python-usb-descriptors.git"}
-amaranth-library = {git = "https://github.com/hansfbaier/amaranth-library", branch="main"}
+amlib = {git = "https://github.com/amaranth-community-unofficial/amlib", branch="main"}
 
 [tool.poetry.dev-dependencies]
 tox = "^3.22.0"
