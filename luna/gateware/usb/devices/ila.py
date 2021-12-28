@@ -184,6 +184,12 @@ class USBIntegratedLogicAnalyzerFrontend(ILAFrontend):
         sample_width_bytes = self.ila.bytes_per_sample
         total_to_read      = self.ila.sample_depth * sample_width_bytes
 
+        # TODO: figure out why the bytes to read sometimes
+        # are greater than the total.
+        # in that case we would get and Overflow error.
+        # If we make instead the bytes to read larger than
+        # the actual file the read will timeout but still
+        # return a correct, full trace
         # Fetch all of our samples from the given device.
-        all_samples = self._device.read(0x80 + self._endpoint_no, total_to_read, timeout=0)
+        all_samples = self._device.read(0x80 + self._endpoint_no, 2 *total_to_read, timeout=0)
         return list(self._split_samples(all_samples))
