@@ -1,11 +1,11 @@
-# get nmigen-boards from https://github.com/hansfbaier/nmigen-boards
+# get amaranth-boards from https://github.com/hansfbaier/amaranth-boards
 # this ULPI board has been confirmed working: https://github.com/twam/PmodUsbUlpi
 
-from nmigen import *
-from nmigen.build import *
+from amaranth import *
+from amaranth.build import *
 
-from nmigen_boards.resources import *
-from nmigen_boards.qmtech_10cl006 import QMTech10CL006Platform
+from amaranth_boards.resources import *
+from amaranth_boards.qmtech_10cl006 import QMTech10CL006Platform
 
 from luna.gateware.platform.core import LUNAPlatform
 

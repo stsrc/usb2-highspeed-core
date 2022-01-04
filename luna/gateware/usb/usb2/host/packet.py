@@ -11,9 +11,9 @@ import operator
 import unittest
 import functools
 
-from nmigen            import Signal, Module, Elaboratable, Cat, Array, Const
-from nmigen.build      import Platform
-from nmigen.hdl.rec    import Record, DIR_FANIN, DIR_FANOUT
+from amaranth            import Signal, Module, Elaboratable, Cat, Array, Const
+from amaranth.build      import Platform
+from amaranth.hdl.rec    import Record, DIR_FANIN, DIR_FANOUT
 
 
 from ..                 import USBSpeed, USBPacketID

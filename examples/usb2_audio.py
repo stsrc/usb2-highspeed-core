@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: BSD--3-Clause
 import os
 
-from nmigen              import *
+from amaranth              import *
 
 from luna                import top_level_cli
 from luna.usb2           import USBDevice, USBIsochronousInMemoryEndpoint, USBIsochronousOutStreamEndpoint, USBIsochronousInStreamEndpoint

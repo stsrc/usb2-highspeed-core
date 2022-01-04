@@ -29,9 +29,9 @@ package_data = \
 install_requires = \
 ['apollo-fpga>=0.0.4,<0.0.5',
  'libusb1>=1.9.2,<2.0.0',
- 'nmigen @ git+https://github.com/nmigen/nmigen.git@master',
- 'nmigen-boards @ git+https://github.com/nmigen/nmigen-boards.git@master',
- 'nmigen-soc @ git+https://github.com/nmigen/nmigen-soc.git@master',
+ 'amaranth @ git+https://github.com/amaranth-lang/amaranth.git@master',
+ 'amaranth-boards @ git+https://github.com/amaranth-lang/amaranth-boards.git@master',
+ 'amaranth-soc @ git+https://github.com/amaranth-lang/amaranth-soc.git@master',
  'pyserial>=3.5,<4.0',
  'pyusb>=1.1.1,<2.0.0',
  'pyvcd>=0.2.4,<0.3.0',
