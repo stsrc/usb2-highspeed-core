@@ -6,7 +6,6 @@ packages = \
  'luna.gateware',
  'luna.gateware.applets',
  'luna.gateware.architecture',
- 'luna.gateware.debug',
  'luna.gateware.interface',
  'luna.gateware.interface.gateware_phy',
  'luna.gateware.interface.serdes_phy',
