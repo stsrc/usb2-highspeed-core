@@ -8,8 +8,6 @@ packages = \
  'luna.gateware.architecture',
  'luna.gateware.interface',
  'luna.gateware.interface.gateware_phy',
- 'luna.gateware.interface.serdes_phy',
- 'luna.gateware.interface.serdes_phy.backends',
  'luna.gateware.platform',
  'luna.gateware.stream',
  'luna.gateware.test',
