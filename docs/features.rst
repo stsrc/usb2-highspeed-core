@@ -89,13 +89,13 @@ Support for Device Mode
 	  -
 	* - **Isochronous Transfers / Endpoints**
 	  - user-defined
-	  - :planned:`planned`
+	  - :complete:`feature complete`
 	* -
 	  - ``IN`` transfer helpers
-	  - :needstest:`complete; needs examples and testing`
+	  - :complete:`feature complete`
 	* -
 	  - ``OUT`` transfer helpers
-	  - :planned:`planned`
+	  - :complete:`feature complete`
 	* -
 	  - CPU interface
 	  - :planned:`planned`
