@@ -16,7 +16,7 @@ ziglang = "^0.8.0"
 amaranth = {git = "https://github.com/amaranth-lang/amaranth.git", branch="main"}
 amaranth-soc = {git = "https://github.com/amaranth-lang/amaranth-soc.git", branch="main"}
 amaranth-boards = {git = "https://github.com/amaranth-lang/amaranth-boards.git", branch="main"}
-usb-descriptors = {git = "git://github.com/hansfbaier/python-usb-descriptors.git"}
+usb-descriptors = {git = "https://github.com/hansfbaier/python-usb-descriptors.git"}
 amlib = {git = "https://github.com/amaranth-community-unofficial/amlib", branch="main"}
 
 [tool.poetry.dev-dependencies]
