@@ -1,3 +1,4 @@
+# LUNA: an Amaranth HDL library for USB ![Simulation Status](https://github.com/greatscottgadgets/luna/workflows/simulations/badge.svg) [![Documentation Status](https://readthedocs.org/projects/luna/badge/?version=latest)](https://luna.readthedocs.io/en/latest/?badge=latest)
 
 # USB2 High Speed Core
 This core is a customization of the [LUNA project](https://github.com/greatscottgadgets/luna),
@@ -48,3 +49,8 @@ an USB2 high speed audio interface with ADAT inputs and outputs
 an USB2 high speed audio interface with analog inputs and outputs
 * [deca-mandelbrot](https://github.com/hansfbaier/deca-mandelbrot),
   a mandelbrot accelerator connected with a USB2 high speed interface
+* [Cynthion](https://github.com/greatscottgadgets/cynthion-hardware): an open source hardware USB test instrument
+* [Apollo](https://github.com/greatscottgadgets/apollo): the firmware that runs on Cynthion's debug controller and which is responsible for configuring its FPGA
+* [Saturn-V](https://github.com/greatscottgadgets/saturn-v): a DFU bootloader created for Cynthion
+* [Packetry](https://github.com/greatscottgadgets/packetry): software for USB analysis
+* [Facedancer](https://github.com/greatscottgadgets/facedancer): software to create USB devices in Python
