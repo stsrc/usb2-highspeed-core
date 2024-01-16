@@ -28,7 +28,7 @@ install_requires = \
  'libusb1>=1.9.2,<2.0.0',
  'amaranth @ git+https://github.com/amaranth-lang/amaranth.git@master',
  'amaranth-boards @ git+https://github.com/amaranth-lang/amaranth-boards.git@master',
- 'amaranth-soc @ git+https://github.com/amaranth-lang/amaranth-soc.git@master',
+ 'amaranth-soc @ git+https://github.com/stsrc/amaranth-soc.git@main',
  'pyserial>=3.5,<4.0',
  'pyusb>=1.1.1,<2.0.0',
  'pyvcd>=0.2.4,<0.3.0',
