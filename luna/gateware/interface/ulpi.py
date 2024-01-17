@@ -11,7 +11,6 @@ import unittest
 
 from amaranth       import Signal, Module, Cat, Elaboratable, ClockSignal, \
                            Record, ResetSignal, Const
-from amaranth.hdl.ast import Rose, Fell, Past
 from amaranth.hdl.rec import Record, DIR_FANIN, DIR_FANOUT, DIR_NONE
 
 from ..utils.io     import delay
@@ -1145,6 +1144,9 @@ class UTMITranslator(Elaboratable):
         # Internal
         #
 
+        # state of ULPI dir on previous clock's rising edge of "usb" domain
+        self.previous_dir = Signal(1)
+
         #  Create a list of extra registers to be set.
         self._extra_registers = {}
 
@@ -1296,7 +1298,10 @@ class UTMITranslator(Elaboratable):
         # A transmission starts when DIR goes high with NXT, or when an RxEvent indicates
         # a switch from RxActive = 0 to RxActive = 1. A transmission stops when DIR drops low,
         # or when the RxEvent RxActive bit drops from 1 to 0, or an error occurs.A
-        dir_rising_edge = Rose(self.ulpi.dir.i, domain="usb")
+        dir_rising_edge = Signal()
+        m.d.usb += [
+            dir_rising_edge.eq(~self.previous_dir & self.ulpi.dir.i)
+        ]
         dir_based_start = dir_rising_edge & self.ulpi.nxt
 
 
@@ -1313,8 +1318,9 @@ class UTMITranslator(Elaboratable):
 
         # RxValid: equivalent to NXT whenever a Rx is active.
         m.d.usb += [
-            self.rx_data   .eq(self.ulpi.data.i),
-            self.rx_valid  .eq(self.ulpi.nxt & self.rx_active)
+            self.previous_dir.eq(self.ulpi.dir),
+            self.rx_data     .eq(self.ulpi.data.i),
+            self.rx_valid    .eq(self.ulpi.nxt & self.rx_active)
         ]
 
         return m

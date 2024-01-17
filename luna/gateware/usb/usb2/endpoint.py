@@ -10,7 +10,6 @@ import functools
 import operator
 
 from amaranth         import Signal, Elaboratable, Module
-from amaranth.hdl.ast import Past
 
 from .packet          import DataCRCInterface, InterpacketTimerInterface, TokenDetectorInterface
 from .packet          import HandshakeExchangeInterface
@@ -104,6 +103,8 @@ class EndpointInterface:
         self.handshakes_out        = HandshakeExchangeInterface(is_detector=False)
         self.issue_stall           = Signal()
 
+        self.tx_valid_past         = Signal()
+        self.tx_valid              = Signal()
 
 class USBEndpointMultiplexer(Elaboratable):
     """ Multiplexes access to the resources shared between multiple endpoint interfaces.
@@ -260,12 +261,19 @@ class USBEndpointMultiplexer(Elaboratable):
         # ... and our timer start signals.
         self.or_join_interface_signals(m, lambda interface : interface.timer.start)
 
+        # TODO: can you connect it with further 'if'?
+        for interface in self._interfaces:
+            m.d.usb += [
+                interface.tx_valid.eq(interface.tx.valid),
+                interface.tx_valid_past.eq(interface.tx_valid)
+            ]
+
         # Finally, connect up our transmit PID select.
         conditional = m.If
 
         # We'll connect our PID toggle to whichever interface has a valid transmission going.
         for interface in self._interfaces:
-            with conditional(interface.tx.valid | Past(interface.tx.valid, domain="usb")):
+            with conditional(interface.tx.valid | interface.tx_valid_past):
                 m.d.comb += shared.tx_pid_toggle.eq(interface.tx_pid_toggle)
 
             conditional = m.Elif
