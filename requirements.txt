@@ -1,8 +1,8 @@
 tox
 pyusb
-git+https://github.com/amaranth-lang/amaranth
+git+https://github.com/stsrc/amaranth@v0.4
 -e git+https://github.com/stsrc/amaranth-soc.git#egg=amaranth-soc
--e git+https://github.com/amaranth-community-unofficial/amaranth-boards.git#egg=amaranth_boards
+-e git+https://github.com/stsrc/amaranth-boards.git#egg=amaranth_boards
 -e git+https://github.com/stsrc/amlib.git#egg=amlib
 -e git+https://github.com/lambdaconcept/minerva.git#egg=minerva
 -e git+https://github.com/lambdaconcept/lambdasoc.git#egg=lambdasoc
