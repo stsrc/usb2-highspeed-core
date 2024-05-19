@@ -26,9 +26,9 @@ package_data = \
 install_requires = \
 ['apollo-fpga>=0.0.4,<0.0.5',
  'libusb1>=1.9.2,<2.0.0',
- 'amaranth @ git+https://github.com/amaranth-lang/amaranth.git@master',
- 'amaranth-boards @ git+https://github.com/amaranth-lang/amaranth-boards.git@master',
- 'amaranth-soc @ git+https://github.com/stsrc/amaranth-soc.git@main',
+ 'amaranth @ git+https://github.com/stsrc/amaranth.git@v0.4',
+ 'amaranth-boards @ git+https://github.com/stsrc/amaranth-boards.git',
+ 'amaranth-soc @ git+https://github.com/stsrc/amaranth-soc.git@temp',
  'pyserial>=3.5,<4.0',
  'pyusb>=1.1.1,<2.0.0',
  'pyvcd>=0.2.4,<0.3.0',

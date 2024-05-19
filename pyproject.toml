@@ -13,9 +13,9 @@ pyvcd = "^0.2.4"
 libusb1 = "^1.9.2"
 apollo-fpga = "^0.0.5"
 ziglang = "^0.8.0"
-amaranth = {git = "https://github.com/amaranth-lang/amaranth.git", branch="main"}
-amaranth-soc = {git = "https://github.com/stsrc/amaranth-soc.git", branch="main"}
-amaranth-boards = {git = "https://github.com/amaranth-lang/amaranth-boards.git", branch="main"}
+amaranth = {git = "https://github.com/stsrc/amaranth.git", branch="v0.4"}
+amaranth-soc = {git = "https://github.com/stsrc/amaranth-soc.git", branch="temp"}
+amaranth-boards = {git = "https://github.com/stsrc/amaranth-boards.git"}
 usb-descriptors = {git = "https://github.com/hansfbaier/python-usb-descriptors.git"}
 amlib = {git = "https://github.com/stsrc/amlib", branch="main"}
 
